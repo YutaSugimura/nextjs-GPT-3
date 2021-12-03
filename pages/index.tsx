@@ -1,11 +1,20 @@
 import type { NextPage } from "next";
 import { useRecoilValue } from "recoil";
-import { loadingState, resultState } from "../hooks/recoil/atoms";
+import { formState, loadingState, resultState } from "../hooks/recoil/atoms";
 import { useTextForm } from "../hooks/form";
+import { GPT_LIST } from "../common/gpt";
 
-const Home: NextPage = () => {
-  const { register, handleSubmit, onSubmit, resetForm } = useTextForm();
+const Page: NextPage = () => {
+  const {
+    register,
+    handleSubmit,
+    onSubmit,
+    resetForm,
+    getPlaceholder,
+    changeFormType,
+  } = useTextForm();
 
+  const formValue = useRecoilValue(formState);
   const resultValue = useRecoilValue(resultState);
   const isLoading = useRecoilValue(loadingState);
 
@@ -13,6 +22,14 @@ const Home: NextPage = () => {
     <div className="w-screen h-screen bg-white">
       <div className="flex items-center w-full h-10 px-2">
         <h1 className="text-2xl font-bold">Generater</h1>
+      </div>
+
+      <div className="flex justify-end items-center h-10 px-2">
+        <select value={formValue} onChange={changeFormType} className="...">
+          {GPT_LIST.map((item) => (
+            <option key={`option_${item.name}`}>{item.name}</option>
+          ))}
+        </select>
       </div>
 
       <form
@@ -26,6 +43,7 @@ const Home: NextPage = () => {
 
           <textarea
             {...register("text", { required: true })}
+            placeholder={getPlaceholder()}
             className="w-full h-96 bg-yellow-50 p-2 border rounded-lg resize-none"
           />
         </div>
@@ -62,4 +80,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Page;
