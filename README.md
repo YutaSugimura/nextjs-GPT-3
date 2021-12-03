@@ -2,6 +2,12 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+Generate the .env.local file and enter the API Key
+
+```zsh
+  cp .env.local.template .env.local
+```
+
 First, run the development server:
 
 ```bash
